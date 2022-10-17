@@ -7,6 +7,7 @@ const app = express()
 app.use(express.json())
 const port = process.env.PORT || 5050
 app.use("/api/auth", require("./routes/auth") )
+app.use("/api/private", require("./routes/private") )
 //Error handler should be last piece of middleware
 app.use(errorHandler)
 const server = app.listen(port, ()=>{

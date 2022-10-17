@@ -7,10 +7,7 @@ exports.register = async (req, res, next)=>{
         username, email, password 
     })
 
-    res.status(201).json({
-        success:true,
-        cratedUser
-    })
+    return sendToken(cratedUser, 201, res)
 
    }catch(error){
     next(error)
@@ -40,10 +37,7 @@ exports.login = async (req, res, next)=>{
              
              return next(new ErrorResponse("Invalid credential", 401))
         }
-        return res.status(200).json({
-            success:true,
-            User
-        })
+        return sendToken(User, 200, res)
     }catch(error){
         return res.status(500).json({success:false, error: error.message})
     }
@@ -55,3 +49,10 @@ exports.resetPassword = (req, res, next)=>{
     res.send("Reset Password Route")
 }
 
+const sendToken = (user, statusCode, res)=>{
+    const token = user.generateToken()
+    return res.status(statusCode).json({
+        success:true,
+        token:token
+    })
+}
