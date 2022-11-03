@@ -17,7 +17,7 @@ exports.register = async (req, res, next)=>{
 }
 exports.login = async (req, res, next)=>{
     const {email, password} = req.body 
-    
+    console.log("first")
     if(!email || !password) {
        
        return next(new ErrorResponse("Please provide Email and password.", 400))
@@ -26,7 +26,7 @@ exports.login = async (req, res, next)=>{
     
     try{
         const User = await user.findOne({email}).select("+password")
-       console.log(User);
+       
         if(!User) {
             
              return next(new ErrorResponse("Invalid credential", 401))
